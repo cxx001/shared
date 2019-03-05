@@ -94,15 +94,17 @@ resp = {
 
 // 向房间其它人推送玩家加入消息
 "onUserEntryRoom": {
-	"required uInt32 id": 1,
+	"required string id": 1,
 	"required string name": 2,
 	"required uInt32 gender": 3,
 	"required string avatarUrl": 4,
 	"required uInt32 coins": 5,
 	"required uInt32 gems": 6,
 	"required uInt32 chairID": 7,
-	"required uInt32 dissolveState": 8,
-	"required uInt32 readyState": 9
+	"required uInt32 readyState": 8,
+	"optional uInt32 dissolveState": 9,
+	"optional string preSid": 10,
+	"optional uInt32 autoState": 11
 }
 
 ============================
@@ -201,7 +203,7 @@ resp = {
 
 //托管
 "table.tableHandler.autoCard": {
-	"required bool bAuto": 1
+	"required uInt32 bAuto": 1
 }
 
 resp = {
@@ -210,31 +212,60 @@ resp = {
 
 "onAutoCard": {
 	"required uInt32 wAutoUser": 1,
-	"required bool bAuto": 2
+	"required uInt32 bAuto": 2
 }
 
 =========================================
 
 // 获取金币场大厅信息
-"connector.lobbyHandler.getMatchInfo": {
+"connector.matchHandler.getMatchInfo": {
 	"required uInt32 gameType": 1
 }
 
 resp = {
 	code: consts.MatchCode.OK,
-	hallInfo[] = {
-		playerCount: count,
-	}
+	gameInfo = [0,0,0]
 }
 
 ========================================
 
-// 开始匹配
-"connector.lobbyHandler.startMatch": {
+// 进入金币场
+"connector.matchHandler.enterGoldRoom": {
 	"required uInt32 gameType": 1,
 	"required uInt32 stage": 2
 }
 
 resp = {
-	code: consts.MatchCode.OK
+	code: consts.RoomCode.OK,
+	roomInfo: {
+		roomid: this.id,
+		creator: usrInfo.id,
+		createTime: Math.ceil(Date.now()/1000),
+		status: consts.TableStatus.INIT,
+		gameType: consts.GameType.PDK_15,
+		stage: stage,
+		players[] = {
+			id: usrInfo.id,
+			name: usrInfo.name,
+			gender: usrInfo.gender,
+			avatarUrl: usrInfo.avatarUrl,
+			coins: usrInfo.coins,
+			gems: usrInfo.gems,
+			chairID: chairID,
+			readyState: consts.ReadyState.Ready_No,
+			preSid: usrInfo.preSid,
+			autoState: consts.AutoState.AutoNo
+		},
+
+		//游戏开始卡牌信息
+		cardInfo:{
+			handCardData: [0, 0, 0],   	//手牌
+			cardCount: [0, 0, 0],      	//手牌数量
+			currentUser: 0,     		//当前出牌用户
+			turnCardCount: 0,   		//上回合出牌张数
+			turnCardData:[],    		//上回合出牌数据
+			turnUser: consts.InvalUser, 	//上回合用户
+			bUserWarn: [false, false, false] //是否报警
+		},
+	}
 }

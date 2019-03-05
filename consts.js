@@ -22,6 +22,7 @@ module.exports = {
 	MaxCardCount: 15,      //手牌最大数量
 	AutoDissolveTime: 60,  //自动解散时间
 	InvalUser: 65535, 	   //无效用户
+	PdkStageCount: 3,  	   // 跑得快阶梯数量
 	
 /* *************************  code begin  ************************* */
 
@@ -47,6 +48,7 @@ module.exports = {
         OK: 0,
 		NO_EXIST_ROOM: 1, //房间不存在
 		FULL_PLAYER_ROOM: 2, //房间人数已满
+		GAME_TYPE_INVALID: 3, //游戏类型不存在
 	},
 
 	// 牌桌状态
@@ -72,6 +74,11 @@ module.exports = {
 	ReadyState: {
 		Ready_No: 0,    	//没有准备
 		Ready_Yes: 1,  		//已经准备
+	},
+
+	AutoState: {
+		AutoNo: 0,    // 没有托管
+		AutoYes: 1,   // 已经托管
 	},
 
 	// 解散状态
@@ -100,9 +107,8 @@ module.exports = {
 	// 金币场code
 	MatchCode: {
 		OK: 0,
-		GAME_TYPE_FAIL: 1,  // 游戏类型错误
-		STAGE_TYPE_FAIL: 2, // 阶梯类型错误
-		EXIST_IN_GAME: 3, //已经在游戏中了
+		GAEM_TYPE_INVALID: 1,  // 游戏类型不存在
+		EXIST_IN_GAME: 2, 	//已经在游戏中了
 	},
 
 	// 游戏类型

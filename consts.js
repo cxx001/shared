@@ -19,10 +19,10 @@ module.exports = {
         WECHAT: "wechat",
 	},
 
-	MaxCardCount: 15,      //手牌最大数量
 	AutoDissolveTime: 60,  //自动解散时间
 	InvalUser: 65535, 	   //无效用户
-	PdkStageCount: 3,  	   // 跑得快阶梯数量
+	Pdk15StageCount: 3,    // 跑得快15阶梯数量
+	Pdk16StageCount: 3,    // 跑得快16阶梯数量
 	
 /* *************************  code begin  ************************* */
 
@@ -69,6 +69,7 @@ module.exports = {
 	ReadyGameCode: {
 		OK: 0,
 		GAME_STARTED: 1,    //游戏已经开始  
+		COINS_LESS: 2,      //玩家金币不足
 	},
 
 	ReadyState: {
@@ -109,10 +110,12 @@ module.exports = {
 		OK: 0,
 		GAEM_TYPE_INVALID: 1,  // 游戏类型不存在
 		EXIST_IN_GAME: 2, 	//已经在游戏中了
+		STAGE_COINS_LOW: 3, //阶梯金币数量不满足
 	},
 
 	// 游戏类型
 	GameType: {
 		PDK_15: 1,  // 跑得快15张
+		PDK_16: 2,  // 跑得快16张
 	}
 }
